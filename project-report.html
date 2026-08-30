@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ghousia Dairy Food — Project Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a1a; background: #fff; font-size: 13px; line-height: 1.6; }
+  @media print {
+    .no-print { display: none; }
+    body { font-size: 11px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 16px; }
+    h3 { font-size: 13px; }
+    .page-break { page-break-before: always; }
+  }
+
+  /* Cover */
+  .cover { background: linear-gradient(135deg, #1a4731 0%, #2d6236 50%, #3a7d44 100%); color: white; padding: 80px 60px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+  .cover-logo { width: 100px; height: 100px; border-radius: 50%; border: 4px solid #d4af37; background: white; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 32px; }
+  .cover h1 { font-size: 36px; font-weight: 900; letter-spacing: 1px; margin-bottom: 8px; }
+  .cover .subtitle { font-size: 18px; color: #d4af37; font-weight: 600; margin-bottom: 32px; letter-spacing: 2px; text-transform: uppercase; }
+  .cover .desc { font-size: 15px; color: rgba(255,255,255,0.8); max-width: 600px; line-height: 1.8; margin-bottom: 40px; }
+  .cover-meta { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; max-width: 700px; }
+  .cover-meta-item { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 16px; }
+  .cover-meta-item .label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #d4af37; margin-bottom: 4px; }
+  .cover-meta-item .value { font-size: 14px; font-weight: 700; }
+  .badge { display: inline-block; background: #d4af37; color: #1a4731; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; }
+
+  /* Content */
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 40px; }
+  h2 { font-size: 20px; font-weight: 800; color: #1a4731; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 3px solid #1a4731; }
+  h3 { font-size: 15px; font-weight: 700; color: #2d6236; margin: 24px 0 10px; }
+  h4 { font-size: 13px; font-weight: 700; color: #333; margin: 16px 0 8px; }
+  p { margin-bottom: 10px; color: #333; }
+  ul, ol { padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 4px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 12px; }
+  th { background: #1a4731; color: white; padding: 10px 12px; text-align: left; font-weight: 700; }
+  td { padding: 9px 12px; border-bottom: 1px solid #e5e7eb; }
+  tr:nth-child(even) td { background: #f8fdf9; }
+  tr:hover td { background: #e8f5ed; }
+
+  /* Cards */
+  .card { background: #f8fdf9; border: 1px solid #c8e6c9; border-radius: 12px; padding: 20px; margin: 12px 0; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+  .tech-card { background: #1a4731; color: white; border-radius: 10px; padding: 14px 16px; }
+  .tech-card .name { font-weight: 800; font-size: 14px; margin-bottom: 4px; }
+  .tech-card .version { color: #d4af37; font-size: 11px; font-weight: 600; }
+  .tech-card .desc { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+
+  /* Feature boxes */
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
+  .feature-box { border-left: 4px solid #1a4731; background: #f8fdf9; padding: 14px 16px; border-radius: 0 10px 10px 0; }
+  .feature-box h4 { color: #1a4731; margin: 0 0 6px; font-size: 13px; }
+  .feature-box p { margin: 0; font-size: 12px; color: #555; }
+
+  /* Code blocks */
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 11px; margin: 12px 0; font-family: 'Consolas', monospace; }
+  code { background: #e8f5ed; color: #1a4731; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-family: 'Consolas', monospace; }
+
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { background: #1a4731; color: white; border-radius: 12px; padding: 20px; text-align: center; }
+  .stat-box .number { font-size: 28px; font-weight: 900; color: #d4af37; }
+  .stat-box .label { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Page structure diagram */
+  .tree { font-family: 'Consolas', monospace; font-size: 12px; background: #f8fdf9; border: 1px solid #c8e6c9; border-radius: 8px; padding: 16px; line-height: 1.8; }
+  .tree .folder { color: #1a4731; font-weight: 700; }
+  .tree .file { color: #555; }
+
+  /* Print button */
+  .print-btn { position: fixed; top: 20px; right: 20px; background: #1a4731; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .print-btn:hover { background: #2d6236; }
+
+  /* TOC */
+  .toc { background: #f8fdf9; border: 1px solid #c8e6c9; border-radius: 12px; padding: 24px; margin: 24px 0; }
+  .toc h3 { color: #1a4731; margin-top: 0; font-size: 16px; }
+  .toc ol { counter-reset: toc; }
+  .toc li { counter-increment: toc; padding: 4px 0; border-bottom: 1px dotted #c8e6c9; }
+  .toc li a { color: #1a4731; text-decoration: none; font-weight: 600; }
+  .toc li a:hover { text-decoration: underline; }
+
+  /* Divider */
+  .divider { height: 2px; background: linear-gradient(to right, #1a4731, #3a7d44, transparent); margin: 32px 0; border-radius: 2px; }
+
+  /* Screenshot mockup */
+  .mockup { background: #f0f0f0; border-radius: 16px; padding: 16px; margin: 16px 0; border: 2px solid #ddd; }
+  .mockup-bar { background: #ddd; border-radius: 8px; height: 32px; display: flex; align-items: center; padding: 0 12px; gap: 6px; margin-bottom: 12px; }
+  .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mockup-screen { background: #1a4731; border-radius: 8px; padding: 16px; color: white; }
+  .mockup-header { display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 12px; }
+  .mockup-logo { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #d4af37; background: white; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .mockup-title { font-weight: 800; font-size: 14px; }
+  .mockup-sub { font-size: 10px; color: #d4af37; letter-spacing: 2px; }
+  .mockup-search { background: white; border-radius: 20px; padding: 8px 16px; color: #999; font-size: 12px; margin-bottom: 12px; }
+  .mockup-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mockup-card { border-radius: 8px; padding: 12px; font-size: 11px; font-weight: 700; }
+
+  /* Highlight */
+  .highlight { background: linear-gradient(135deg, #e8f5ed, #f8fdf9); border: 1px solid #c8e6c9; border-radius: 8px; padding: 16px; margin: 12px 0; }
+  .tag { display: inline-block; background: #e8f5ed; color: #1a4731; border: 1px solid #c8e6c9; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin: 2px; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div class="cover-logo">🥛</div>
+  <div class="badge">Project Report · 2026</div>
+  <h1>Ghousia Dairy Food</h1>
+  <div class="subtitle">Full-Stack Web Application</div>
+  <p class="desc">
+    A complete, production-ready e-commerce and food ordering web application built for Ghousia Dairy Food,
+    a family-run dairy, mithai, bakery and fast food shop in Multan, Pakistan. The app features a full product
+    catalog, WhatsApp ordering, interactive search, mobile-first design and rich UI/UX.
+  </p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="label">Business</div>
+      <div class="value">Ghousia Dairy Food</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Established</div>
+      <div class="value">Since 1999</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Location</div>
+      <div class="value">Multan, Pakistan</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Tech Stack</div>
+      <div class="value">React + TanStack</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Report Year</div>
+      <div class="value">2026</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="label">Status</div>
+      <div class="value">✅ Production Ready</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h3>📋 Table of Contents</h3>
+    <ol>
+      <li><a href="#overview">Project Overview</a></li>
+      <li><a href="#business">Business Information</a></li>
+      <li><a href="#stats">Project Statistics</a></li>
+      <li><a href="#tech">Technology Stack</a></li>
+      <li><a href="#architecture">Application Architecture</a></li>
+      <li><a href="#structure">Project File Structure</a></li>
+      <li><a href="#features">Features & Functionality</a></li>
+      <li><a href="#pages">Pages & Routes</a></li>
+      <li><a href="#menu">Product Catalog & Menu</a></li>
+      <li><a href="#ui">UI/UX Design System</a></li>
+      <li><a href="#mobile">Mobile Responsiveness</a></li>
+      <li><a href="#whatsapp">WhatsApp Integration</a></li>
+      <li><a href="#search">Search System</a></li>
+      <li><a href="#cart">Cart System</a></li>
+      <li><a href="#deployment">Deployment</a></li>
+      <li><a href="#dependencies">Dependencies</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. OVERVIEW -->
+  <h2 id="overview">1. Project Overview</h2>
+  <p>
+    Ghousia Dairy Food is a fully functional food ordering and product catalog web application.
+    It was designed and developed as a modern, mobile-first web application that allows customers
+    to browse products, search items, view product details and place orders directly via WhatsApp.
+  </p>
+  <p>
+    The application serves as a digital storefront for a real physical shop in Multan — replacing
+    the need for a traditional app or third-party delivery platform, while keeping ordering simple
+    through WhatsApp which the business already uses.
+  </p>
+  <div class="feature-grid">
+    <div class="feature-box">
+      <h4>🎯 Primary Purpose</h4>
+      <p>Digital product catalog and WhatsApp ordering system for a local food business</p>
+    </div>
+    <div class="feature-box">
+      <h4>📱 Mobile-First</h4>
+      <p>Fully responsive design optimised for Android and iOS mobile browsers</p>
+    </div>
+    <div class="feature-box">
+      <h4>⚡ Performance</h4>
+      <p>SSR-enabled TanStack Start for fast page loads and SEO-friendly rendering</p>
+    </div>
+    <div class="feature-box">
+      <h4>🔒 No Backend Needed</h4>
+      <p>Serverless-friendly — products are static data, orders go via WhatsApp</p>
+    </div>
+  </div>
+
+  <!-- 2. BUSINESS -->
+  <h2 id="business">2. Business Information</h2>
+  <table>
+    <tr><th>Field</th><th>Details</th></tr>
+    <tr><td>Business Name</td><td>Ghousia Dairy Food</td></tr>
+    <tr><td>Type</td><td>Family-run dairy, mithai, bakery and fast food shop</td></tr>
+    <tr><td>Established</td><td>1999</td></tr>
+    <tr><td>Location</td><td>Suraj Kund Road, Pull Thokar, Multan, Pakistan</td></tr>
+    <tr><td>Opening Hours</td><td>Monday – Sunday: 06:00 AM – 11:30 PM</td></tr>
+    <tr><td>Primary Phone</td><td>0322 730 2121</td></tr>
+    <tr><td>Secondary Phone</td><td>0300 730 2156</td></tr>
+    <tr><td>WhatsApp</td><td>+92 322 730 2121</td></tr>
+    <tr><td>Owners</td><td>M. Sajid Ali (Co-Owner & Operations), Muhammad Ali (Co-Owner & Management)</td></tr>
+    <tr><td>Tagline</td><td>Pure Dairy | Fresh Mithai | Quality Bakers</td></tr>
+    <tr><td>Urdu Tagline</td><td>آپ کا بھروسہ، ہماری خالص روایت</td></tr>
+  </table>
+
+  <!-- 3. STATS -->
+  <h2 id="stats">3. Project Statistics</h2>
+  <div class="stats-grid">
+    <div class="stat-box"><div class="number">100+</div><div class="label">Products</div></div>
+    <div class="stat-box"><div class="number">8</div><div class="label">Pages/Routes</div></div>
+    <div class="stat-box"><div class="number">11</div><div class="label">Categories</div></div>
+    <div class="stat-box"><div class="number">50+</div><div class="label">Components</div></div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-box"><div class="number">30+</div><div class="label">Asset Images</div></div>
+    <div class="stat-box"><div class="number">5</div><div class="label">Splash Slides</div></div>
+    <div class="stat-box"><div class="number">3</div><div class="label">Sec. Load Time</div></div>
+    <div class="stat-box"><div class="number">100%</div><div class="label">Mobile Ready</div></div>
+  </div>
+
+  <!-- 4. TECH STACK -->
+  <h2 id="tech">4. Technology Stack</h2>
+  <h3>Core Framework</h3>
+  <div class="card-grid">
+    <div class="tech-card"><div class="name">React</div><div class="version">v19.2.0</div><div class="desc">UI component library — latest version with concurrent features</div></div>
+    <div class="tech-card"><div class="name">TanStack Start</div><div class="version">v1.168.26</div><div class="desc">Full-stack SSR framework built on Vite and TanStack Router</div></div>
+    <div class="tech-card"><div class="name">TanStack Router</div><div class="version">v1.170.16</div><div class="desc">Type-safe file-based routing with code splitting</div></div>
+    <div class="tech-card"><div class="name">TypeScript</div><div class="version">v5.8.3</div><div class="desc">Static typing for reliability and developer experience</div></div>
+    <div class="tech-card"><div class="name">Vite</div><div class="version">v8.0.16</div><div class="desc">Lightning-fast build tool and dev server</div></div>
+    <div class="tech-card"><div class="name">Nitro</div><div class="version">3.0.260603</div><div class="desc">Server engine used by TanStack Start for SSR/deployment</div></div>
+  </div>
+
+  <h3>Styling</h3>
+  <div class="card-grid">
+    <div class="tech-card"><div class="name">Tailwind CSS</div><div class="version">v4.2.1</div><div class="desc">Utility-first CSS framework — all styling done with Tailwind classes</div></div>
+    <div class="tech-card"><div class="name">tw-animate-css</div><div class="version">v1.3.4</div><div class="desc">Animation utilities for Tailwind (pulse, ping, fade, etc.)</div></div>
+    <div class="tech-card"><div class="name">class-variance-authority</div><div class="version">v0.7.1</div><div class="desc">Variant-based component styling helper</div></div>
+    <div class="tech-card"><div class="name">tailwind-merge</div><div class="version">v3.5.0</div><div class="desc">Smart Tailwind class merging to avoid conflicts</div></div>
+  </div>
+
+  <h3>UI Components</h3>
+  <div class="card-grid">
+    <div class="tech-card"><div class="name">Radix UI</div><div class="version">v1.x</div><div class="desc">Headless accessible UI primitives (accordion, dialog, dropdown, etc.)</div></div>
+    <div class="tech-card"><div class="name">Lucide React</div><div class="version">v0.575.0</div><div class="desc">Icon library — 580+ clean SVG icons used throughout the app</div></div>
+    <div class="tech-card"><div class="name">shadcn/ui</div><div class="version">Latest</div><div class="desc">Pre-built component system using Radix + Tailwind</div></div>
+    <div class="tech-card"><div class="name">Sonner</div><div class="version">v2.0.7</div><div class="desc">Toast notification system</div></div>
+  </div>
+
+  <h3>State Management & Data</h3>
+  <div class="card-grid">
+    <div class="tech-card"><div class="name">Zustand</div><div class="version">v5.0.14</div><div class="desc">Lightweight state management for cart — persisted to localStorage</div></div>
+    <div class="tech-card"><div class="name">TanStack Query</div><div class="version">v5.101.1</div><div class="desc">Server state management and data fetching</div></div>
+    <div class="tech-card"><div class="name">React Hook Form</div><div class="version">v7.71.2</div><div class="desc">Form handling with validation</div></div>
+    <div class="tech-card"><div class="name">Zod</div><div class="version">v3.24.2</div><div class="desc">Schema validation for forms and data</div></div>
+  </div>
+
+  <h3>Development Tools</h3>
+  <table>
+    <tr><th>Tool</th><th>Version</th><th>Purpose</th></tr>
+    <tr><td>ESLint</td><td>v9.32.0</td><td>Code linting and quality enforcement</td></tr>
+    <tr><td>Prettier</td><td>v3.7.3</td><td>Code formatting</td></tr>
+    <tr><td>TypeScript ESLint</td><td>v8.56.1</td><td>TypeScript-specific linting rules</td></tr>
+    <tr><td>Bun</td><td>Latest</td><td>Fast JavaScript runtime and package manager (alternative to npm)</td></tr>
+    <tr><td>Git</td><td>—</td><td>Version control</td></tr>
+    <tr><td>Netlify</td><td>—</td><td>Deployment platform (configured via netlify.toml)</td></tr>
+    <tr><td>VS Code</td><td>—</td><td>Primary IDE for development</td></tr>
+  </table>
+
+  <!-- 5. ARCHITECTURE -->
+  <h2 id="architecture">5. Application Architecture</h2>
+  <h3>Rendering Strategy</h3>
+  <p>The app uses <strong>Server-Side Rendering (SSR)</strong> via TanStack Start + Nitro. Pages are rendered on the server, sent as HTML to the browser, then React hydrates them for interactivity.</p>
+
+  <table>
+    <tr><th>Layer</th><th>Technology</th><th>Role</th></tr>
+    <tr><td>Routing</td><td>TanStack Router (file-based)</td><td>Handles all URL navigation and code splitting</td></tr>
+    <tr><td>SSR Server</td><td>Nitro + src/server.ts</td><td>Renders pages server-side, serves HTML</td></tr>
+    <tr><td>UI Layer</td><td>React 19 + Tailwind CSS</td><td>All visual components and styling</td></tr>
+    <tr><td>State</td><td>Zustand (cart) + React useState</td><td>Client-side state management</td></tr>
+    <tr><td>Data</td><td>Static TypeScript files</td><td>All products, brand info stored as TS constants</td></tr>
+    <tr><td>Orders</td><td>WhatsApp wa.me API</td><td>Order messages sent via WhatsApp links</td></tr>
+    <tr><td>Build</td><td>Vite + @lovable.dev/vite-tanstack-config</td><td>Bundles and optimises the app</td></tr>
+    <tr><td>Deploy</td><td>Netlify</td><td>Hosting with Nitro cloudflare adapter</td></tr>
+  </table>
+
+  <h3>Data Flow Diagram</h3>
+  <div class="card">
+    <pre>
+Customer (Browser)
+        │
+        ▼
+   Vite Dev Server / Nitro SSR
+        │
+        ▼
+   TanStack Router
+   ┌────┴─────────────────────────────┐
+   │                                  │
+   ▼                                  ▼
+Route Loaders                    React Components
+(getProduct, etc.)               (AppShell, ProductTile, etc.)
+        │                              │
+        ▼                              ▼
+   products.ts                   Zustand Cart Store
+   (Static data)                 (localStorage persisted)
+        │                              │
+        └──────────────┬───────────────┘
+                       ▼
+              WhatsApp wa.me link
+                       │
+                       ▼
+              Customer places order
+              directly on WhatsApp</pre>
+  </div>
+
+  <!-- 6. FILE STRUCTURE -->
+  <h2 id="structure">6. Project File Structure</h2>
+  <div class="tree">
+<span class="folder">Ghousia-Dairy-Food/</span>
+├── <span class="folder">src/</span>
+│   ├── <span class="folder">assets/</span>              ← All images (PNG, JPG, WEBP)
+│   │   ├── logo.jpeg              ← Brand logo
+│   │   ├── storefront.jpeg        ← Shop exterior photo
+│   │   ├── desi-ghee.png          ← Product image
+│   │   ├── dairy-products.png     ← Category image
+│   │   ├── mithai.png             ← Category image
+│   │   ├── bakery-fastfood.png    ← Category image
+│   │   ├── ice-cream.png          ← Category image
+│   │   ├── [30+ more images]      ← All product photos
+│   │
+│   ├── <span class="folder">components/</span>
+│   │   ├── AppShell.tsx           ← Main layout: header, footer, nav, search
+│   │   ├── ProductTile.tsx        ← Product card component
+│   │   └── <span class="folder">ui/</span>              ← shadcn/ui components (40+ files)
+│   │
+│   ├── <span class="folder">lib/</span>
+│   │   ├── brand.ts               ← Business info, WhatsApp links, contacts
+│   │   ├── products.ts            ← All products & categories (100+ items)
+│   │   ├── cart.ts                ← Cart state (Zustand) + order message builder
+│   │   └── utils.ts               ← Tailwind utility helpers
+│   │
+│   ├── <span class="folder">routes/</span>              ← File-based routing (TanStack Router)
+│   │   ├── __root.tsx             ← Root layout wrapper
+│   │   ├── index.tsx              ← Home page
+│   │   ├── menu.tsx               ← Full menu page
+│   │   ├── product.$id.tsx        ← Individual product detail page
+│   │   ├── cart.tsx               ← Shopping cart page
+│   │   ├── location.tsx           ← Store location page
+│   │   └── info.tsx               ← About us page
+│   │
+│   ├── router.tsx                 ← Router configuration
+│   ├── server.ts                  ← SSR server entry (Nitro)
+│   ├── start.ts                   ← App entry point
+│   └── styles.css                 ← Global styles + Tailwind imports
+│
+├── package.json                   ← Dependencies and scripts
+├── vite.config.ts                 ← Vite + TanStack Start config
+├── tsconfig.json                  ← TypeScript configuration
+├── netlify.toml                   ← Netlify deployment config
+├── components.json                ← shadcn/ui config
+└── start-server.bat               ← One-click dev server launcher
+  </div>
+
+  <!-- 7. FEATURES -->
+  <h2 id="features">7. Features & Functionality</h2>
+
+  <h3>Core Features</h3>
+  <table>
+    <tr><th>#</th><th>Feature</th><th>Description</th><th>Status</th></tr>
+    <tr><td>1</td><td>Product Catalog</td><td>100+ products across 11 categories with images, names, prices and descriptions</td><td>✅ Done</td></tr>
+    <tr><td>2</td><td>Hero Carousel</td><td>5-slide auto-rotating splash screen with product images, every 3 seconds</td><td>✅ Done</td></tr>
+    <tr><td>3</td><td>Search with Suggestions</td><td>Live search with product-specific emoji icons, partial word matching</td><td>✅ Done</td></tr>
+    <tr><td>4</td><td>Shop by Category</td><td>4 visual cards linking to menu sections with real product photos</td><td>✅ Done</td></tr>
+    <tr><td>5</td><td>WhatsApp Ordering</td><td>Direct order via WhatsApp with formatted message including product, price, Urdu note</td><td>✅ Done</td></tr>
+    <tr><td>6</td><td>Shopping Cart</td><td>Add/remove items, quantity control, persisted to localStorage</td><td>✅ Done</td></tr>
+    <tr><td>7</td><td>Product Detail Page</td><td>Full product view with image, price, description, order button and related items</td><td>✅ Done</td></tr>
+    <tr><td>8</td><td>Mobile Navigation</td><td>Bottom nav bar, mobile search bar, hamburger menu</td><td>✅ Done</td></tr>
+    <tr><td>9</td><td>Location Page</td><td>Shop photo, Google Maps embed, phone numbers, opening hours</td><td>✅ Done</td></tr>
+    <tr><td>10</td><td>About Us Page</td><td>Owner profiles, story, storefront photo, social media links</td><td>✅ Done</td></tr>
+    <tr><td>11</td><td>SEO Meta Tags</td><td>Full Open Graph, Twitter Card and JSON-LD structured data per page</td><td>✅ Done</td></tr>
+    <tr><td>12</td><td>Floating WhatsApp Button</td><td>Sticky WhatsApp order button on mobile — always accessible</td><td>✅ Done</td></tr>
+    <tr><td>13</td><td>Animated WhatsApp Icon</td><td>Pulsing green glow animation on WhatsApp icon in footer</td><td>✅ Done</td></tr>
+    <tr><td>14</td><td>Fast Food Sub-Menu</td><td>Organised Fast Food section with 7 sub-categories (Pizza, Zingers, Wings, etc.)</td><td>✅ Done</td></tr>
+    <tr><td>15</td><td>Urdu Text Support</td><td>Urdu font (font-urdu) used for Arabic/Urdu text in taglines and messages</td><td>✅ Done</td></tr>
+  </table>
+
+  <!-- 8. PAGES -->
+  <h2 id="pages">8. Pages & Routes</h2>
+  <table>
+    <tr><th>Route</th><th>Page</th><th>Description</th><th>Key Elements</th></tr>
+    <tr><td><code>/</code></td><td>Home</td><td>Main landing page</td><td>Carousel, Shop by Category, Product grid, Trust banner</td></tr>
+    <tr><td><code>/menu</code></td><td>Menu</td><td>Full product catalog</td><td>Filter tabs, 11 category sections, search</td></tr>
+    <tr><td><code>/product/:id</code></td><td>Product Detail</td><td>Single product view</td><td>Image, price, description, WhatsApp order, related items</td></tr>
+    <tr><td><code>/cart</code></td><td>Cart</td><td>Shopping cart</td><td>Item list, quantities, order message, WhatsApp checkout</td></tr>
+    <tr><td><code>/location</code></td><td>Location</td><td>Store location info</td><td>Shop photo, Google Maps, phone numbers, hours</td></tr>
+    <tr><td><code>/info</code></td><td>About Us</td><td>Business information</td><td>Story, owners, storefront, social links, contact</td></tr>
+  </table>
+
+  <!-- 9. MENU / PRODUCTS -->
+  <div class="page-break"></div>
+  <h2 id="menu">9. Product Catalog & Menu</h2>
+
+  <h3>Category Structure</h3>
+  <table>
+    <tr><th>Category</th><th>ID</th><th>Group</th><th>Item Count</th><th>Examples</th></tr>
+    <tr><td>Dairy Products</td><td>dairy</td><td>Main</td><td>6</td><td>Fresh Milk, Desi Ghee, Butter, Yogurt, Fresh Cream, Khoya</td></tr>
+    <tr><td>Ice Cream and Badami Milk Bottle</td><td>icecream</td><td>Main</td><td>2</td><td>Qulfa, Badami Milk Bottle</td></tr>
+    <tr><td>Mithai</td><td>mithai</td><td>Main</td><td>19</td><td>Barfi, Rasgulla, Gulab Jamun, Sohan Halwa, Laddu, Peda</td></tr>
+    <tr><td>Bakery</td><td>bakery</td><td>Bakery</td><td>4</td><td>Fresh Bread, Biscuits, Cake Rusk, Eggs</td></tr>
+    <tr><td>Pizza</td><td>pizza</td><td>Fast Food</td><td>24</td><td>Tikka, Fajita, BBQ, Supreme, MQ Special, Malai Boti</td></tr>
+    <tr><td>Zingers</td><td>zingers</td><td>Fast Food</td><td>22</td><td>Special Zinger, Double Daiker, Rolls, Wraps, Cold Drinks</td></tr>
+    <tr><td>Wings</td><td>wings</td><td>Fast Food</td><td>6</td><td>Fried Crispy, Flaming, Hot Buffalo (6 & 12 pcs)</td></tr>
+    <tr><td>Shawarma</td><td>shawarma</td><td>Fast Food</td><td>4</td><td>Chicken, Cheese, Zinger, Zinger Cheese</td></tr>
+    <tr><td>Fries</td><td>fries</td><td>Fast Food</td><td>6</td><td>Plain, Masala, Cheesy, Garlic Mayo, Pizza Fries</td></tr>
+    <tr><td>Sandwiches</td><td>sandwiches</td><td>Fast Food</td><td>6</td><td>Club, Chicken, Mexican, Twister, Kamera, Chicken Cheese</td></tr>
+    <tr><td>Pasta</td><td>pasta</td><td>Fast Food</td><td>5</td><td>MQ Special, Flaming, Creamy, Cruncher, Chicken Cheese</td></tr>
+  </table>
+
+  <h3>Mithai Sub-Categories</h3>
+  <table>
+    <tr><th>Sub-Category</th><th>Items</th></tr>
+    <tr><td>Sohan Halwa</td><td>Akhroti Sohan Halwa</td></tr>
+    <tr><td>Barfi</td><td>Special Barfi, Simple Barfi, Roll Barfi</td></tr>
+    <tr><td>Gulab Jamun</td><td>Brown Gulab Jamun, Khoya Gulab Jamun, Gulab Jamun</td></tr>
+    <tr><td>Rasgulla</td><td>Bangali Rasgulla, White Cham Cham, White Rasgulla, Gulabi Rasgulla, Khoya Rasgulla</td></tr>
+    <tr><td>Single Items</td><td>Kalakand, Peda, Gajar Ka Halwa</td></tr>
+    <tr><td>Laddu</td><td>Special Laddu, Besan Laddu, Moti Choor Laddu (On Order)</td></tr>
+  </table>
+
+  <!-- 10. UI DESIGN -->
+  <h2 id="ui">10. UI/UX Design System</h2>
+
+  <h3>Color Palette</h3>
+  <table>
+    <tr><th>Color Name</th><th>Hex</th><th>Usage</th></tr>
+    <tr><td>Brand Green (Dark)</td><td>#1a4731</td><td>Primary brand color, headers, buttons</td></tr>
+    <tr><td>Brand Green (Mid)</td><td>#2d6236</td><td>Hover states, backgrounds</td></tr>
+    <tr><td>Brand Green (Light)</td><td>#3a7d44</td><td>WhatsApp buttons, accents</td></tr>
+    <tr><td>Gold</td><td>#d4af37</td><td>Accent color, highlights, badges</td></tr>
+    <tr><td>WhatsApp Green</td><td>#25D366</td><td>WhatsApp icons and buttons</td></tr>
+    <tr><td>Instagram Gradient</td><td>#fdf497 → #fd5949 → #d6249f → #285AEB</td><td>Instagram button</td></tr>
+    <tr><td>Facebook Blue</td><td>#1877F2</td><td>Facebook button</td></tr>
+    <tr><td>Background</td><td>#fafaf8</td><td>Page background</td></tr>
+    <tr><td>White</td><td>#ffffff</td><td>Cards, surfaces</td></tr>
+  </table>
+
+  <h3>Typography</h3>
+  <table>
+    <tr><th>Font Type</th><th>Class</th><th>Usage</th></tr>
+    <tr><td>Serif (Headings)</td><td>font-serif</td><td>Product names, section titles, brand name</td></tr>
+    <tr><td>Sans-serif (Body)</td><td>default</td><td>Descriptions, labels, navigation</td></tr>
+    <tr><td>Urdu Font</td><td>font-urdu</td><td>Arabic/Urdu text in taglines and order messages</td></tr>
+    <tr><td>Monospace</td><td>tabular-nums</td><td>Prices and numbers</td></tr>
+  </table>
+
+  <h3>Design Principles</h3>
+  <div class="feature-grid">
+    <div class="feature-box"><h4>Rounded Corners</h4><p>All cards use rounded-2xl (16px) for a soft, modern look</p></div>
+    <div class="feature-box"><h4>Shadow Depth</h4><p>ring-1 ring-border + shadow-sm for card elevation</p></div>
+    <div class="feature-box"><h4>Gradient Overlays</h4><p>Category cards use gradient overlays for text readability over images</p></div>
+    <div class="feature-box"><h4>Animation</h4><p>animate-ping for WhatsApp, transition-transform for hover effects</p></div>
+  </div>
+
+  <!-- 11. MOBILE -->
+  <h2 id="mobile">11. Mobile Responsiveness</h2>
+  <h3>Breakpoints Used</h3>
+  <table>
+    <tr><th>Breakpoint</th><th>Prefix</th><th>Width</th><th>Layout</th></tr>
+    <tr><td>Mobile (default)</td><td>none</td><td>0–767px</td><td>Single column, stacked layout, bottom nav bar</td></tr>
+    <tr><td>Small Mobile</td><td>sm:</td><td>640px+</td><td>2-column grids in some sections</td></tr>
+    <tr><td>Desktop</td><td>lg:</td><td>1024px+</td><td>Multi-column layout, sidebar, desktop nav</td></tr>
+    <tr><td>Extra Wide</td><td>xl:</td><td>1280px+</td><td>Wider product grids (8 columns)</td></tr>
+  </table>
+
+  <h3>Mobile-Specific Features</h3>
+  <ul>
+    <li><strong>Bottom Navigation Bar</strong> — Fixed at bottom with Home, Menu, Cart, Location, About tabs with active indicators</li>
+    <li><strong>Search Bar Below Header</strong> — Full-width search bar below the green header on mobile only</li>
+    <li><strong>Floating WhatsApp Button</strong> — Fixed bottom-right "Order Now" button for quick ordering</li>
+    <li><strong>Hamburger Menu</strong> — Collapsible mobile menu with all navigation links</li>
+    <li><strong>Touch-optimised Buttons</strong> — Minimum 44px tap targets on all buttons</li>
+    <li><strong>Cart Icon in Header</strong> — Cart icon with badge visible in header on mobile</li>
+    <li><strong>Stacked Product Layout</strong> — 3-column product grid on mobile (4-8 on desktop)</li>
+  </ul>
+
+  <!-- 12. WHATSAPP -->
+  <h2 id="whatsapp">12. WhatsApp Integration</h2>
+  <p>All orders are placed via WhatsApp using the <code>wa.me</code> API. No backend, no payment gateway needed — orders go directly to the shop owner's WhatsApp.</p>
+
+  <h3>WhatsApp Links Used</h3>
+  <table>
+    <tr><th>Location</th><th>Trigger</th><th>Number</th></tr>
+    <tr><td>Header "Order Now" button (desktop)</td><td>Click</td><td>0322 730 2121</td></tr>
+    <tr><td>Floating button (mobile)</td><td>Always visible</td><td>0322 730 2121</td></tr>
+    <tr><td>Hero carousel slides</td><td>Per product</td><td>0322 730 2121</td></tr>
+    <tr><td>Product detail page</td><td>Direct order button</td><td>0322 730 2121</td></tr>
+    <tr><td>Cart checkout</td><td>Full cart order</td><td>0322 730 2121</td></tr>
+    <tr><td>Contact Owners (About page)</td><td>Per owner</td><td>Sajid Ali / Muhammad Ali</td></tr>
+  </table>
+
+  <h3>Order Message Format</h3>
+  <div class="card">
+    <pre>
+*Welcome to Ghousia Dairy Food* 🌿
+
+Assalam-o-Alaikum! Mujhe yeh item chahiye:
+
+• Pure Desi Ghee — Rs 4,200 (per kg)
+
+📍 Address / Delivery details yahan likhein:
+
+—
+Agar aap apni marzi se order tayyar karwana chahte hain —
+koi cheez customize karni ho, quantity change karni ho,
+ya koi khas request ho — toh seedha is message par bata dein
+ya call kar lein. Hum khushi se madad karein ge. 😊
+
+Thank you for choosing Ghousia Dairy Food.
+We look forward to serving you! 🙏</pre>
+  </div>
+
+  <!-- 13. SEARCH -->
+  <h2 id="search">13. Search System</h2>
+  <h3>How Search Works</h3>
+  <ol>
+    <li>User types in the search bar (header on desktop, below header on mobile)</li>
+    <li>Suggestions dropdown appears instantly with up to 6 matching products</li>
+    <li>Each suggestion shows a product-specific emoji, product name, category and price</li>
+    <li>Partial word matching — typing "ice" shows "Ice Cream", "fri" shows fries</li>
+    <li>Clicking a suggestion navigates directly to the product detail page</li>
+    <li>"See all results" link at bottom searches the full menu</li>
+    <li>Press Escape or click outside to close suggestions</li>
+  </ol>
+
+  <h3>Product Emoji Mapping</h3>
+  <table>
+    <tr><th>Product Type</th><th>Emoji</th><th>Matching Keywords</th></tr>
+    <tr><td>Pizza</td><td>🍕</td><td>pizza</td></tr>
+    <tr><td>Burger / Zinger</td><td>🍔</td><td>burger, zinger</td></tr>
+    <tr><td>Wings / Chicken</td><td>🍗</td><td>wing, nugget, crispy bite</td></tr>
+    <tr><td>Shawarma</td><td>🌯</td><td>shawarma</td></tr>
+    <tr><td>Fries</td><td>🍟</td><td>fries, fry</td></tr>
+    <tr><td>Sandwich</td><td>🥪</td><td>sandwich</td></tr>
+    <tr><td>Pasta</td><td>🍝</td><td>pasta</td></tr>
+    <tr><td>Roll / Wrap</td><td>🌮</td><td>roll, wrap</td></tr>
+    <tr><td>Cold Drink</td><td>🥤</td><td>drink, cold</td></tr>
+    <tr><td>Milk</td><td>🥛</td><td>milk, doodh</td></tr>
+    <tr><td>Butter</td><td>🧈</td><td>butter, makhan</td></tr>
+    <tr><td>Ice Cream / Qulfa</td><td>🍨</td><td>qulfa, kulfi, ice cream</td></tr>
+    <tr><td>Eggs</td><td>🥚</td><td>egg</td></tr>
+    <tr><td>Bread</td><td>🍞</td><td>bread</td></tr>
+    <tr><td>Barfi</td><td>🍬</td><td>barfi</td></tr>
+  </table>
+
+  <!-- 14. CART -->
+  <h2 id="cart">14. Cart System</h2>
+  <h3>Cart Features</h3>
+  <ul>
+    <li>Add to cart from product tiles and product detail pages</li>
+    <li>Quantity increment / decrement controls</li>
+    <li>Remove individual items</li>
+    <li>Cart count badge on cart icon (header + bottom nav)</li>
+    <li>Persisted to <code>localStorage</code> via Zustand persist middleware</li>
+    <li>Cart survives page refresh and browser close/reopen</li>
+    <li>Estimated subtotal calculation with per-item price × quantity</li>
+    <li>One-click WhatsApp checkout with full formatted order message</li>
+    <li>"Clear cart" option after ordering</li>
+  </ul>
+
+  <h3>Cart State (Zustand Store)</h3>
+  <pre>
+type CartItem = { id: string; name: string; qty: number }
+
+Cart actions:
+  add(product)         → adds 1 qty or increments existing
+  remove(id)           → removes item completely
+  setQty(id, qty)      → sets exact quantity (0 = removes)
+  clear()              → empties cart
+  count()              → total item count</pre>
+
+  <!-- 15. DEPLOYMENT -->
+  <h2 id="deployment">15. Deployment</h2>
+  <h3>Local Development</h3>
+  <table>
+    <tr><th>Command</th><th>Purpose</th></tr>
+    <tr><td><code>npm run dev</code></td><td>Start Vite dev server on localhost:8080</td></tr>
+    <tr><td><code>npm run dev -- --host 0.0.0.0</code></td><td>Start dev server accessible on local network (mobile testing)</td></tr>
+    <tr><td><code>npm run build</code></td><td>Production build</td></tr>
+    <tr><td><code>npm run preview</code></td><td>Preview production build locally</td></tr>
+    <tr><td><code>start-server.bat</code></td><td>One-click dev server launcher for Windows</td></tr>
+  </table>
+
+  <h3>Netlify Deployment</h3>
+  <div class="card">
+    <p>The project is configured for <strong>Netlify</strong> deployment via <code>netlify.toml</code>. The Nitro server uses Cloudflare adapter for edge deployment.</p>
+    <p><strong>Steps to deploy:</strong></p>
+    <ol style="margin-top:8px">
+      <li>Push code to GitHub: <code>git push</code></li>
+      <li>Connect GitHub repo to Netlify</li>
+      <li>Netlify auto-detects build settings from netlify.toml</li>
+      <li>Click Deploy — live URL generated automatically</li>
+    </ol>
+  </div>
+
+  <!-- 16. DEPENDENCIES -->
+  <div class="page-break"></div>
+  <h2 id="dependencies">16. Full Dependencies List</h2>
+  <h3>Production Dependencies</h3>
+  <table>
+    <tr><th>Package</th><th>Version</th><th>Purpose</th></tr>
+    <tr><td>react</td><td>^19.2.0</td><td>Core UI library</td></tr>
+    <tr><td>react-dom</td><td>^19.2.0</td><td>React DOM renderer</td></tr>
+    <tr><td>@tanstack/react-router</td><td>^1.170.16</td><td>File-based routing</td></tr>
+    <tr><td>@tanstack/react-start</td><td>^1.168.26</td><td>SSR framework</td></tr>
+    <tr><td>@tanstack/react-query</td><td>^5.101.1</td><td>Server state management</td></tr>
+    <tr><td>zustand</td><td>^5.0.14</td><td>Cart state management</td></tr>
+    <tr><td>tailwindcss</td><td>^4.2.1</td><td>CSS framework</td></tr>
+    <tr><td>lucide-react</td><td>^0.575.0</td><td>Icons</td></tr>
+    <tr><td>@radix-ui/react-*</td><td>^1.x–^2.x</td><td>Headless UI primitives (20+ packages)</td></tr>
+    <tr><td>class-variance-authority</td><td>^0.7.1</td><td>Component variant styling</td></tr>
+    <tr><td>clsx</td><td>^2.1.1</td><td>Conditional class names</td></tr>
+    <tr><td>tailwind-merge</td><td>^3.5.0</td><td>Tailwind class merging</td></tr>
+    <tr><td>sonner</td><td>^2.0.7</td><td>Toast notifications</td></tr>
+    <tr><td>react-hook-form</td><td>^7.71.2</td><td>Form management</td></tr>
+    <tr><td>zod</td><td>^3.24.2</td><td>Schema validation</td></tr>
+    <tr><td>tw-animate-css</td><td>^1.3.4</td><td>Tailwind animations</td></tr>
+    <tr><td>embla-carousel-react</td><td>^8.6.0</td><td>Carousel component</td></tr>
+    <tr><td>recharts</td><td>^2.15.4</td><td>Chart components</td></tr>
+    <tr><td>date-fns</td><td>^4.1.0</td><td>Date utilities</td></tr>
+    <tr><td>vaul</td><td>^1.1.2</td><td>Drawer component</td></tr>
+  </table>
+
+  <h3>Development Dependencies</h3>
+  <table>
+    <tr><th>Package</th><th>Version</th><th>Purpose</th></tr>
+    <tr><td>vite</td><td>^8.0.16</td><td>Build tool</td></tr>
+    <tr><td>typescript</td><td>^5.8.3</td><td>TypeScript compiler</td></tr>
+    <tr><td>@vitejs/plugin-react</td><td>^5.2.0</td><td>React Vite plugin</td></tr>
+    <tr><td>@tanstack/router-plugin</td><td>^1.168.18</td><td>Router code generation</td></tr>
+    <tr><td>@tailwindcss/vite</td><td>^4.2.1</td><td>Tailwind Vite integration</td></tr>
+    <tr><td>eslint</td><td>^9.32.0</td><td>Code linting</td></tr>
+    <tr><td>prettier</td><td>^3.7.3</td><td>Code formatting</td></tr>
+    <tr><td>typescript-eslint</td><td>^8.56.1</td><td>TypeScript ESLint rules</td></tr>
+    <tr><td>nitro</td><td>3.0.260603</td><td>SSR server engine</td></tr>
+    <tr><td>@lovable.dev/vite-tanstack-config</td><td>^2.6.4</td><td>Lovable Vite config preset</td></tr>
+    <tr><td>vite-tsconfig-paths</td><td>^6.0.2</td><td>TypeScript path aliases in Vite</td></tr>
+    <tr><td>@types/react</td><td>^19.2.0</td><td>React TypeScript types</td></tr>
+    <tr><td>@types/node</td><td>^22.16.5</td><td>Node.js TypeScript types</td></tr>
+  </table>
+
+  <div class="divider"></div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center; padding: 40px 0; color: #888; font-size: 12px;">
+    <div style="font-size:24px; margin-bottom: 8px;">🥛</div>
+    <div style="font-weight:800; color:#1a4731; font-size:16px;">Ghousia Dairy Food</div>
+    <div style="color:#d4af37; font-weight:600; margin:4px 0;">Sweets &amp; Bakers — Since 1999</div>
+    <div style="margin-top:8px;">Suraj Kund Road, Pull Thokar, Multan, Pakistan</div>
+    <div>WhatsApp: 0322 730 2121 &nbsp;|&nbsp; 0300 730 2156</div>
+    <div style="margin-top:16px; font-size:11px; color:#aaa;">Project Report — © 2026 Ghousia Dairy Food. All rights reserved.</div>
+    <div style="font-family:serif; font-size:16px; color:#d4af37; margin-top:8px; direction:rtl;">آپ کا بھروسہ، ہماری خالص روایت</div>
+  </div>
+
+</div>
+
+</body>
+</html>

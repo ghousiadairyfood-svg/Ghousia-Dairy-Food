@@ -21,25 +21,35 @@ export function getCartOrderSummary(items: CartItem[]) {
 export function cartPriceText(row: ReturnType<typeof getCartOrderSummary>["rows"][number]) {
   if (row.price == null) return "Price on confirmation";
   const unit = row.p?.unit ? ` ${row.p.unit}` : "";
-  const subtotal = row.subtotal != null && row.subtotal !== row.price ? ` · ${formatPKR(row.subtotal)}` : "";
+  const subtotal =
+    row.subtotal != null && row.subtotal !== row.price ? ` · ${formatPKR(row.subtotal)}` : "";
   return `${formatPKR(row.price)}${unit}${subtotal}`;
 }
 
 export function buildOrderMessage(items: CartItem[]) {
   if (!items.length) return "";
-  const { rows, totalItems, knownTotal, hasUnpriced } = getCartOrderSummary(items);
+  const { rows, knownTotal, hasUnpriced } = getCartOrderSummary(items);
   return [
-    `*New Order — Ghousia Dairy Food*`,
-    `Assalam-o-Alaikum! I would like to place the following order:`,
+    `*Welcome to Ghousia Dairy Food* 🌿`,
     ``,
-    ...rows.map((r, idx) => `${idx + 1}. ${r.i.qty} × ${r.i.name} — ${cartPriceText(r)}`),
+    `Assalam-o-Alaikum! Mujhe yeh order chahiye:`,
     ``,
-    `Total items: ${totalItems}`,
+    ...rows.map((r, idx) => {
+      const unit = r.p?.unit ? ` (${r.p.unit})` : "";
+      const price = r.price != null ? ` — ${formatPKR(r.price)}${unit}` : "";
+      return `${idx + 1}. ${r.i.name} × ${r.i.qty}${price}`;
+    }),
+    ``,
     knownTotal > 0
-      ? `Estimated subtotal: ${formatPKR(knownTotal)}${hasUnpriced ? " (plus items to confirm)" : ""}`
-      : `Please share the total.`,
+      ? `Estimated Total: ${formatPKR(knownTotal)}${hasUnpriced ? " + (kuch items confirm hongi)" : ""}`
+      : `Kindly total amount bata dein.`,
     ``,
-    `Please confirm availability, final price and pickup/delivery. Shukriya!`,
+    `📍 Address / Delivery details yahan likhein:`,
+    ``,
+    `—`,
+    `Agar aap apni marzi se order tayyar karwana chahte hain — koi cheez customize karni ho, quantity change karni ho, ya koi khas request ho — toh seedha is message par bata dein ya call kar lein. Hum khushi se madad karein ge. 😊`,
+    ``,
+    `Thank you for choosing Ghousia Dairy Food. We look forward to serving you! 🙏`,
   ].join("\n");
 }
 
@@ -66,7 +76,10 @@ export const useCart = create<CartState>()(
       remove: (id) => set((s) => ({ items: s.items.filter((i) => i.id !== id) })),
       setQty: (id, qty) =>
         set((s) => ({
-          items: qty <= 0 ? s.items.filter((i) => i.id !== id) : s.items.map((i) => (i.id === id ? { ...i, qty } : i)),
+          items:
+            qty <= 0
+              ? s.items.filter((i) => i.id !== id)
+              : s.items.map((i) => (i.id === id ? { ...i, qty } : i)),
         })),
       clear: () => set({ items: [] }),
       count: () => get().items.reduce((a, i) => a + i.qty, 0),

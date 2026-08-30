@@ -76,12 +76,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Ghousia Dairy Food — Pure Dairy, Fresh Mithai & Bakery in Multan" },
-      { name: "description", content: "Since 1999 — pure dairy, fresh mithai, bakery & ice cream from Ghousia Dairy Food, Main Bazar Chowk, Multan. Order via WhatsApp." },
+      {
+        name: "description",
+        content:
+          "Since 1999 — pure dairy, fresh mithai, bakery & ice cream from Ghousia Dairy Food, Main Bazar Chowk, Multan. Order via WhatsApp.",
+      },
       { name: "author", content: "Ghousia Dairy Food" },
       { name: "theme-color", content: "#0F4A2C" },
       { name: "referrer", content: "no-referrer-when-downgrade" },
       { property: "og:title", content: "Ghousia Dairy Food — Since 1999" },
-      { property: "og:description", content: "Pure Dairy | Fresh Mithai | Quality Bakers. Family-run sweets & dairy shop in Multan." },
+      {
+        property: "og:description",
+        content:
+          "Pure Dairy | Fresh Mithai | Quality Bakers. Family-run sweets & dairy shop in Multan.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Ghousia Dairy Food" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -91,7 +99,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,

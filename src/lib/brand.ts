@@ -3,14 +3,13 @@ export const BRAND = {
   tagline: "Pure Dairy | Fresh Mithai | Quality Bakers",
   urduTagline: "آپ کا بھروسہ، ہماری خالص روایت",
   since: 1999,
-  address: "Ghousia Dairy Food Shop, Main Bazar/Chowk, Multan, Pakistan",
+  address: "Ghousia Dairy Food, Suraj Kund Road, Pull Thokar, Multan, Pakistan",
   mapsUrl: "https://maps.app.goo.gl/QS2kik5tXAB4MqLw5",
   hours: "Monday – Sunday: 06:00 AM – 11:30 PM (Daily Fresh Batch)",
   whatsappPrimary: "923227302121",
   contacts: [
     { name: "Sajid Ali", phone: "03217302121", whatsapp: "923007306784" },
     { name: "Muhammad Ali", phone: "03227302121", whatsapp: "923227302121" },
-    { name: "Orders / WhatsApp", phone: "03007302156", whatsapp: "923227302121" },
   ],
   instagram: "https://www.instagram.com/ghousia_dairy_food",
   facebook: "https://www.facebook.com/share/1Ybaz45gf3/",
@@ -25,7 +24,9 @@ export function whatsAppLinks(message: string, number = BRAND.whatsappPrimary) {
 }
 
 export function isMobileWhatsAppDevice() {
-  return typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  return (
+    typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+  );
 }
 
 // wa.me is the safest public click-to-chat endpoint across desktop and mobile;

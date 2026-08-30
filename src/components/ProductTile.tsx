@@ -4,34 +4,30 @@ import { formatPKR } from "@/lib/products";
 
 // Category gradient fallbacks when image fails to load
 const fallbackGradients: Record<string, string> = {
-  dairy:    "from-amber-50 to-yellow-100",
+  dairy: "from-amber-50 to-yellow-100",
   icecream: "from-pink-50 to-rose-100",
-  mithai:   "from-orange-50 to-amber-100",
-  bakery:   "from-stone-50 to-stone-100",
+  mithai: "from-orange-50 to-amber-100",
+  bakery: "from-stone-50 to-stone-100",
 };
 
 const fallbackEmoji: Record<string, string> = {
-  dairy:    "🥛",
+  dairy: "🥛",
   icecream: "🍨",
-  mithai:   "🍬",
-  bakery:   "🍞",
+  mithai: "🍬",
+  bakery: "🍞",
 };
 
 export function ProductTile({ p, showPrice }: { p: Product; showPrice?: boolean }) {
   return (
-    <Link
-      to="/product/$id"
-      params={{ id: p.id }}
-      className="group flex flex-col"
-    >
+    <Link to="/product/$id" params={{ id: p.id }} className="group flex flex-col">
       {/* Image */}
-      <div className={`w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br ${fallbackGradients[p.category] ?? "from-gray-50 to-gray-100"} ring-1 ring-border shadow-sm group-hover:shadow-md group-hover:ring-brand/40 transition-all duration-200 relative`}>
+      <div
+        className={`w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br ${fallbackGradients[p.category] ?? "from-gray-50 to-gray-100"} ring-1 ring-border shadow-sm group-hover:shadow-md group-hover:ring-brand/40 transition-all duration-200 relative`}
+      >
         <img
           src={p.image}
           alt={p.name}
           loading="lazy"
-          crossOrigin="anonymous"
-          referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
             // Hide broken image, show emoji fallback
@@ -39,7 +35,8 @@ export function ProductTile({ p, showPrice }: { p: Product; showPrice?: boolean 
             const parent = e.currentTarget.parentElement;
             if (parent && !parent.querySelector(".emoji-fallback")) {
               const div = document.createElement("div");
-              div.className = "emoji-fallback absolute inset-0 flex items-center justify-center text-4xl";
+              div.className =
+                "emoji-fallback absolute inset-0 flex items-center justify-center text-4xl";
               div.textContent = fallbackEmoji[p.category] ?? "🛒";
               parent.appendChild(div);
             }
