@@ -5,7 +5,11 @@
 [build.environment]
   NODE_VERSION = "20"
 
+[functions]
+  directory = ".output/server"
+  node_bundler = "esbuild"
+
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/server"
   status = 200
