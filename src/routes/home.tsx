@@ -23,7 +23,7 @@ import iceCreamImg from "@/assets/ice-cream.png";
 import dairyProductsImg from "@/assets/dairy-products.png";
 import iceCreamCatImg from "@/assets/ice-cream.png";
 import mithaiImg from "@/assets/mithai.png";
-import bakeryFastfoodImg from "@/assets/bakery-fastfood.png";
+import bakeryFastfoodImg from "@/assets/bakery.png";
 
 export const Route = createFileRoute("/home")({
   component: HomePage,
@@ -265,8 +265,8 @@ function HomePage() {
                   },
                   {
                     id: "fastfood",
-                    label: "Bakery and Fast Food",
-                    desc: "Pizza, Zingers, Wings and more",
+                    label: "Bakery",
+                    desc: "Bread, Biscuits and more",
                     image: bakeryFastfoodImg,
                     color: "from-emerald-700/80",
                   },

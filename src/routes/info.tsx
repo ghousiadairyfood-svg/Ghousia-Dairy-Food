@@ -87,7 +87,7 @@ function InfoPage() {
               </div>
               <div className="divide-y divide-border">
                 {[
-                  { name: "M. Sajid Ali", role: "Co-Owner & Operations" },
+                  { name: "M. Sajid Ali", role: "Owner & Operations" },
                   { name: "Muhammad Ali", role: "Co-Owner & Management" },
                 ].map((owner) => (
                   <div key={owner.name} className="flex items-center gap-4 px-5 py-4">
